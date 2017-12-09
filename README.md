@@ -1,11 +1,11 @@
-# magic
+# glaaby
 Magic is a free console tool to make tedious tasks at production fast and safe
 
 
 #How to use:
 
 1. run magic interactive mode:
-> *magic*
+> *glaaby*
 
 2. write script you want to magic to perform, use TAB! For auto completion!
 Remember magic's power is autocompletion you'll spend a feww seconds for this script.
