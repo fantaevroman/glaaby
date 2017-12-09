@@ -11,13 +11,13 @@ Magic is a free console tool to make tedious tasks at production fast and safe
 Remember magic's power is autocompletion you'll spend a feww seconds for this script.
 You don't need to memorize it.
 ```
-{action:go to, location: /tmp} =>
-{action:read filenames} =>
-{action:file to lines, filename:name} (file, line)=>
-{action:replace in line, 
-pattern:{start} {word:count} {word:index} {end}, replace: index:${set:new value}} =>
-{action:write to file, location:user@mysshserver:/tmp/my.txt} =>
-{action:run script}
+goTo(location:"/tmp") =>
+readFileNames() =>
+map(fileName -> readTextFile(fileName)) =>
+replaceInLine(pattern: "{start} {word:count} {word:index} {end}", 
+replace: "index:${set:new value}"}) =>
+writeToFile(location:"user@mysshserver:/tmp/my.txt") =>
+run()
 ```
 3. Magic output:
 
@@ -26,41 +26,37 @@ every time you need to run script, use magic! You have auto completeon
 for dirrectories on remote mashines too.
 
 ```
-{action:go to, location:root@dev-env-server} =>
-{action:go to, location:root@deeper-inside-server:/tmp} =>
-{action:read filenames} name =>
-{for server: [root@server1:/tmp, root@server2:/tmp, root@server3:/tmp]}
-  {action:copy, location:server} 
-{end for} =>
-{action:run script}
+tunnel(location:"root@dev-env-server") =>
+tunnel(location:"root@deeper-inside-server:/tmp") =>
+goThere()=>
+readFilenames() => (name) ->{
+for server: ["root@server1:/tmp/", "root@server2:/tmp/", "root@server3:/tmp/"]{
+  copyFile(location:server + "copied_file" + name) 
+}} =>
+run()
 ```
 
-5. Use your own language to extend the script, here kotlin examle.
+5. Use your own language to extend the script, here is kotlin examle.
 ```
-{action:http request, url:magic.com} (responce, body)=>
-{action:kotlin, 
-source:"
-body => {
-println("your brand new text at the page top" + body)
-}"} =>
-{action:write to file, location:localhost:/tmp} =>
-{action:run script}
+httpRequest(url:magic.com} => 
+kotlin(
+(response, body) -> {
+return "your brand new text at the page top" + body
+}) =>
+writeToFile(location:"localhost:/tmp") =>
+run()
 ```
 
 6. Transfer data between Databases. Tunnel your path if you need to.
 Once you have an tunnel you can go there at any line of code.
 ```
-{action:tunnel, location:user@server1} =>
-{action:tunnel, location:user2@server2} =>
-{action:go to, location:user@server2} =>
-{action:mysql select, sql: select * from users} records =>
-{action:kotlin, source:"
-records:Iterator<Record> =>{
-let mongoDbDocuments:List<Document> docs = ArrayList()
-//..translate sql record to mongoDb and return
+tunnel(location:"user@server1") =>
+tunnel(location:"user2@server2") =>
+goThere()=>
+mysqlSelect(sql: "select * from users") => kotlin (record ->{
+//..translate sql record to mongoDb Document and return
 //use debugger and IDE power to make things fast
-}
-"} =>
+}) =>
 {action:mongo insert, location:mongoserver:/mydatabase}
 {action:run script}
 ```
