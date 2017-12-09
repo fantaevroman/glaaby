@@ -40,18 +40,40 @@ for dirrectories on remote mashines too.
 {action:http request, url:magic.com} (responce, body)=>
 {action:kotlin, 
 source:"
-fun parce(body:String){
-println(body)
+body => {
+println("your brand new text at the page top" + body)
 }"} =>
 {action:write to file, location:localhost:/tmp} =>
 {action:run script}
 ```
 
-6. Performance 
+6. Transfer data between Databases. Tunnel your path if you need to.
+Once you have an tunnel you can go there at any line of code.
+```
+{action:tunnel, location:user@server1} =>
+{action:tunnel, location:user2@server2} =>
+{action:go to, location:user@server2} =>
+{action:mysql select, sql: select * from users} records =>
+{action:kotlin, source:"
+records:Iterator<Record> =>{
+let mongoDbDocuments:List<Document> docs = ArrayList()
+//..translate sql record to mongoDb and return
+//use debugger and IDE power to make things fast
+}
+"} =>
+{action:mongo insert, location:mongoserver:/mydatabase}
+{action:run script}
+```
+7. Map reduce...
+
+8. Parallel executions...
+
+7. Performance
 Magic written in kotlin so you should expect the best speed. 
 You can run tasks in parallel! Finally you can use all your CPU cores at your scripts :)
 
+
+8 Compilation
+Before you can execute script it will be compiled, so less problems with typos.
+
 #How to install
-
-
-
