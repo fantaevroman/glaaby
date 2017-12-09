@@ -4,11 +4,11 @@ Glaaby is a free console tool to make tedious tasks at production fast and safe
 
 #How to use:
 
-1. run magic interactive mode:
+1. run glaaby interactive mode:
 > *glaaby*
 
-2. write script you want to magic to perform, use TAB! For auto completion!
-Remember magic's power is autocompletion you'll spend a feww seconds for this script.
+2. write script you want to glaaby to perform, use TAB! For auto completion!
+Remember glaaby's power is autocompletion you'll spend a feww seconds for this script.
 You don't need to memorize it.
 ```
 goTo(location:"/tmp") =>
@@ -19,10 +19,10 @@ replace: "index:${set:new value}"}) =>
 writeToFile(location:"user@mysshserver:/tmp/my.txt") =>
 run()
 ```
-3. Magic output:
+3. Glaaby output:
 
 4. You have many machines at production, forget to log there 
-every time you need to run script, use magic! You have auto completeon
+every time you need to run script, use glaaby! You have auto completeon
 for dirrectories on remote mashines too.
 
 ```
@@ -38,7 +38,7 @@ run()
 
 5. Use your own language to extend the script, here is kotlin examle.
 ```
-httpRequest(url:magic.com} => 
+httpRequest(url:glaaby.com} => 
 kotlin(
 (response, body) -> {
 return "your brand new text at the page top" + body
@@ -65,7 +65,7 @@ mysqlSelect(sql: "select * from users") => kotlin (record ->{
 8. Parallel executions...
 
 7. Performance
-Magic written in kotlin so you should expect the best speed. 
+Glaaby written in kotlin so you should expect the best speed. 
 You can run tasks in parallel! Finally you can use all your CPU cores at your scripts :)
 
 
